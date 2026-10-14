@@ -6,13 +6,13 @@ const PORT = process.env.PORT || 3000;
 const CLIENT_DIR = path.resolve('./client');
 
 let countriesData = [];
-const visitedCountries = []; // filled by POST /api/addVisited
-const soloRatings = []; // filled by POST /api/addRating
+const visitedCountries = [];
+const soloRatings = []; 
 
-// ======================= Helpers =======================
+//  Helpers 
 
 // Sends a JSON response. HEAD requests get the same headers as GET
-// (including the real Content-Length) but no body. 204 has no body at all.
+
 function sendJSON(req, res, statusCode, data) {
   if (statusCode === 204) {
     res.writeHead(204);
@@ -27,7 +27,7 @@ function sendJSON(req, res, statusCode, data) {
   return res.end(payload);
 }
 
-// Reads a POST body. Supports JSON and x-www-form-urlencoded.
+// Reads a post body can support JSON and url encoded one
 function parseRequestBody(req) {
   return new Promise((resolve, reject) => {
     let body = '';
@@ -65,7 +65,8 @@ const summarize = (c) => ({
   currencyName: c.finance.currency_name,
 });
 
-// Haversine formula: straight-line distance between two lat/long points
+// Haversine formula: straight-line distance between two lat/long points, I did find this formula online as I knew about a way to
+//calculate using lang/lant but I forgot the formula, my IGME 330 class helped with learning how to radians and sin/cosine in java
 function distanceKm(a, b) {
   const toRad = (deg) => (Number(deg) * Math.PI) / 180;
   const lat1 = toRad(a.latitude);
@@ -77,8 +78,7 @@ function distanceKm(a, b) {
   return 6371 * 2 * Math.asin(Math.sqrt(h)); // 6371 = Earth's radius in km
 }
 
-// ======================= Static client files =======================
-
+// static files
 const MIME_TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript' };
 
 async function serveStatic(req, res, pathname) {
@@ -86,7 +86,7 @@ async function serveStatic(req, res, pathname) {
   const filePath = path.join(CLIENT_DIR, fileName);
   const type = MIME_TYPES[path.extname(filePath)];
 
-  // Only known file types, and never anything outside the client folder
+// only cilent folders
   if (!type || !filePath.startsWith(CLIENT_DIR)) return false;
 
   try {
@@ -99,13 +99,12 @@ async function serveStatic(req, res, pathname) {
   }
 }
 
-// ======================= GET / HEAD endpoints =======================
+//  GET / HEAD endpoints 
 
 const getRoutes = {
-  // GET /api/getAllCountries -> every country with all of its data
   '/api/getAllCountries': (req, res) => sendJSON(req, res, 200, countriesData),
 
-  // GET /api/getCountries?region=Europe&subregion=Southern Europe
+  // GET /api/getCountries within region and subregion 
   '/api/getCountries': (req, res, query) => {
     if (!query.region && !query.subregion) {
       return sendJSON(req, res, 400, { error: 'Provide a region and/or subregion' });
@@ -120,8 +119,8 @@ const getRoutes = {
     return sendJSON(req, res, 200, results.map(summarize));
   },
 
-  // GET /api/getCountriesByCurrency?currency=EUR&region=Europe&subregion=...
-  // currency can be a code (EUR) or a name (euro)
+  // GET /api/getCountries by their currency, region, and sub region
+  // Note: currency can EUR or a name euro 
   '/api/getCountriesByCurrency': (req, res, query) => {
     if (!query.currency) return sendJSON(req, res, 400, { error: 'currency is required' });
 
@@ -136,7 +135,7 @@ const getRoutes = {
     return sendJSON(req, res, 200, results.map(summarize));
   },
 
-  // GET /api/getDistance?from=France&to=Peru
+  // GET /api/getDistance using lang/lant formula to find distance from two countries 
   '/api/getDistance': (req, res, query) => {
     if (!query.from || !query.to) {
       return sendJSON(req, res, 400, { error: 'Both from and to are required' });
@@ -156,7 +155,8 @@ const getRoutes = {
     });
   },
 
-  // GET /api/getVisited -> countries added with POST /api/addVisited
+  // countries added with POST /api/addVisited
+  //the user will add countries they have visited 
   '/api/getVisited': (req, res) => sendJSON(req, res, 200, visitedCountries),
 
   // GET /api/getRatings -> solo-travel ratings, highest first
@@ -166,11 +166,11 @@ const getRoutes = {
   },
 };
 
-// ======================= POST endpoints =======================
+// POST endpoints 
 
 const postRoutes = {
-  // POST /api/addVisited  body: name (required), capital, region, subregion
-  // 201 = added, 204 = already there so its details were updated
+  // POST /api/addVisited  
+  // body: name (required), capital, region, subregion
   '/api/addVisited': async (req, res) => {
     const body = await parseRequestBody(req);
     if (!clean(body.name)) return sendJSON(req, res, 400, { error: 'name is required' });
@@ -195,7 +195,8 @@ const postRoutes = {
     return sendJSON(req, res, 201, entry);
   },
 
-  // POST /api/addRating  body: name (required), capital, rating 1-5 (required), comment
+  // POST /api/addRating  
+  // body: name (required), capital, rating 1-5 (required), comment
   // How friendly is this country for women traveling solo?
   // 201 = new rating, 204 = existing rating updated
   '/api/addRating': async (req, res) => {
@@ -229,7 +230,7 @@ const postRoutes = {
   },
 };
 
-// ======================= Server =======================
+//  Server 
 
 const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
