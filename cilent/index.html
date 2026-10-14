@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solo Atlas</title>
+  <!-- <link rel="stylesheet" href="/style.css"> -->
+  <script src="client.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Solo Atlas</h1>
+    <p>Find countries, measure distances, log where you've been, and rate how friendly places are for women traveling solo.</p>
+  </header>
+
+  <main>
+    <!-- Every request's status code and body show up here -->
+    <section class="card response" aria-live="polite">
+      <h2>Response</h2>
+      <p id="status">Send a request to see the response.</p>
+      <p id="meta" class="muted"></p>
+      <pre id="output"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Countries by region <code>GET /api/getCountries</code></h2>
+      <form id="regionForm">
+        <label>Region <select name="region" class="region-select"><option value="">Any</option></select></label>
+        <label>Subregion <select name="subregion" class="subregion-select"><option value="">Any</option></select></label>
+        <label>Method <select name="method"><option>GET</option><option>HEAD</option></select></label>
+        <button type="submit">Find countries</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Countries by currency <code>GET /api/getCountriesByCurrency</code></h2>
+      <form id="currencyForm">
+        <label>Currency <input name="currency" list="currencyList" placeholder="EUR or euro" required></label>
+        <label>Region <select name="region" class="region-select"><option value="">Any</option></select></label>
+        <label>Subregion <select name="subregion" class="subregion-select"><option value="">Any</option></select></label>
+        <label>Method <select name="method"><option>GET</option><option>HEAD</option></select></label>
+        <button type="submit">Find countries</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Distance between two countries <code>GET /api/getDistance</code></h2>
+      <form id="distanceForm">
+        <label>From <input name="from" list="countryList" placeholder="United States" required></label>
+        <label>To <input name="to" list="countryList" placeholder="Japan" required></label>
+        <label>Method <select name="method"><option>GET</option><option>HEAD</option></select></label>
+        <button type="submit">Measure</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>All countries <code>GET /api/getAllCountries</code></h2>
+      <form id="allForm">
+        <label>Method <select name="method"><option>GET</option><option>HEAD</option></select></label>
+        <button type="submit">Get all countries</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Add a country you visited <code>POST /api/addVisited</code></h2>
+      <p class="hint">Pick a country and the other fields fill in automatically. Adding the same country again updates it.</p>
+      <form id="visitedForm">
+        <label>Country <input name="name" list="countryList" class="country-input" required></label>
+        <label>Capital <input name="capital" class="fill-capital"></label>
+        <label>Region <input name="region" class="fill-region"></label>
+        <label>Subregion <input name="subregion" class="fill-subregion"></label>
+        <button type="submit">Add visited</button>
+      </form>
+      <h3>Visited <button type="button" class="link" data-get="/api/getVisited">GET /api/getVisited</button></h3>
+      <ul id="visitedList" class="list"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Rate it for solo female travel <code>POST /api/addRating</code></h2>
+      <p class="hint">1 = would not recommend, 5 = very welcoming. Ratings are personal opinions. Rating a country again replaces your rating.</p>
+      <form id="ratingForm">
+        <label>Country <input name="name" list="countryList" class="country-input" required></label>
+        <label>Capital <input name="capital" class="fill-capital"></label>
+        <label>Rating
+          <select name="rating" required>
+            <option value="">Choose</option>
+            <option value="5">5 · Very welcoming</option>
+            <option value="4">4 · Good</option>
+            <option value="3">3 · Mixed</option>
+            <option value="2">2 · Use caution</option>
+            <option value="1">1 · Would not recommend</option>
+          </select>
+        </label>
+        <label class="wide">Comment <input name="comment" placeholder="Tips for other solo travelers"></label>
+        <button type="submit">Submit rating</button>
+      </form>
+      <h3>Ratings <button type="button" class="link" data-get="/api/getRatings">GET /api/getRatings</button></h3>
+      <ul id="ratingList" class="list"></ul>
+    </section>
+  </main>
+
+  <datalist id="countryList"></datalist>
+  <datalist id="currencyList"></datalist>
+</body>
+</html>
