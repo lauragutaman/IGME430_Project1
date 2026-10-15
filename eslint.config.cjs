@@ -4,11 +4,11 @@ const globals = require("globals");
 module.exports = [
   js.configs.recommended,
   {
-    languageOptions: {
-      globals: globals.node,
-    },
-    rules: {
-      "no-console": "warn",
-    },
+    languageOptions: { globals: globals.node },
+    rules: { "no-console": "warn" },
+  },
+  {
+    files: ["client/**/*.js"],
+    languageOptions: { globals: globals.browser },
   },
 ];
