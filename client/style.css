@@ -190,3 +190,34 @@ button.link {
 .muted {
   color: var(--muted);
 }
+footer {
+  text-align: center;
+  padding: 1rem 1rem 2rem;
+}
+
+a.button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+}
+
+a.button:hover {
+  filter: brightness(1.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.4rem 0.5rem;
+  border-top: 1px solid var(--border);
+  vertical-align: top;
+}

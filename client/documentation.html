@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solo Atlas Documentation</title>
+</head>
+
+<body>
+  <header>
+    <h1>Solo Atlas Documentation</h1>
+    <p>Every endpoint the API supports, what it expects, and what it returns.</p>
+  </header>
+
+  <main>
+    <h2>GET / HEAD endpoints</h2>
+    <p class="hint">All of these support HEAD, which returns the same headers as GET with no body.</p>
+    <table>
+      <tr>
+        <th>Endpoint</th>
+        <th>Parameters</th>
+        <th>Responses</th>
+      </tr>
+      <tr>
+        <td><code>/api/getAllCountries</code></td>
+        <td>None</td>
+        <td>200: every country in the dataset</td>
+      </tr>
+      <tr>
+        <td><code>/api/getCountries</code></td>
+        <td><code>region</code> and/or <code>subregion</code></td>
+        <td>200: matching countries · 400: no filters given · 404: no matches</td>
+      </tr>
+      <tr>
+        <td><code>/api/getCountriesByCurrency</code></td>
+        <td><code>currency</code> (required, code like EUR or name like euro), optional <code>region</code>,
+          <code>subregion</code>
+        </td>
+        <td>200: matching countries · 400: missing currency · 404: no matches</td>
+      </tr>
+      <tr>
+        <td><code>/api/getDistance</code></td>
+        <td><code>from</code>, <code>to</code> (both required, country names)</td>
+        <td>200: distance in km and miles · 400: missing a country · 404: country not found</td>
+      </tr>
+      <tr>
+        <td><code>/api/getVisited</code></td>
+        <td>None</td>
+        <td>200: countries added with addVisited</td>
+      </tr>
+      <tr>
+        <td><code>/api/getRatings</code></td>
+        <td>None</td>
+        <td>200: solo-travel ratings, highest first</td>
+      </tr>
+    </table>
+
+    <h2>POST endpoints</h2>
+    <p class="hint">Bodies can be sent as JSON or as form url encoded.</p>
+    <table>
+      <tr>
+        <th>Endpoint</th>
+        <th>Body</th>
+        <th>Responses</th>
+      </tr>
+      <tr>
+        <td><code>/api/addVisited</code></td>
+        <td><code>name</code> (required), optional <code>capital</code>, <code>region</code>, <code>subregion</code>.
+          Blank fields use the dataset's values.</td>
+        <td>201: added · 204: already in the list, updated · 400: missing name or bad body · 404: country not found
+        </td>
+      </tr>
+      <tr>
+        <td><code>/api/addRating</code></td>
+        <td><code>name</code> and <code>rating</code> 1–5 (required), optional <code>capital</code>,
+          <code>comment</code>
+        </td>
+        <td>201: added · 204: existing rating replaced · 400: missing fields or rating out of range · 404: country not
+          found</td>
+      </tr>
+    </table>
+    </section>
+
+    <section class="card">
+      <h2>Anything else</h2>
+      <p>Any other URL or method returns <code>404</code> with a JSON error message.</p>
+  </main>
+
+  <footer>
+    <a class="button" href="/">Back to Solo Atlas</a>
+  </footer>
+</body>
+
+</html>
