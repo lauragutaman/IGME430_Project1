@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 
 const PORT = process.env.PORT || 3000;
-const CLIENT_DIR = path.resolve('./client/client.js');
+const CLIENT_DIR = path.resolve('./client');
 
 let countriesData = [];
 const visitedCountries = [];
