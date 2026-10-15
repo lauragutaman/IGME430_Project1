@@ -9,7 +9,9 @@
   --border: #e5e0d5;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -26,8 +28,15 @@ header {
   text-align: center;
 }
 
-header h1 { margin: 0 0 0.25rem; letter-spacing: 0.02em; }
-header p { margin: 0; opacity: 0.9; }
+header h1 {
+  margin: 0 0 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+header p {
+  margin: 0;
+  opacity: 0.9;
+}
 
 main {
   max-width: 960px;
@@ -44,7 +53,10 @@ main {
   padding: 1rem 1.25rem;
 }
 
-.card h2 { font-size: 1.05rem; margin: 0 0 0.75rem; }
+.card h2 {
+  font-size: 1.05rem;
+  margin: 0 0 0.75rem;
+}
 
 code {
   font-size: 0.8rem;
@@ -70,9 +82,12 @@ label {
   gap: 0.25rem;
 }
 
-label.wide { flex: 1 1 220px; }
+label.wide {
+  flex: 1 1 220px;
+}
 
-input, select {
+input,
+select {
   font: inherit;
   color: var(--ink);
   padding: 0.45rem 0.6rem;
@@ -91,7 +106,9 @@ button {
   cursor: pointer;
 }
 
-button:hover { filter: brightness(1.1); }
+button:hover {
+  filter: brightness(1.1);
+}
 
 /* Response panel sticks to the top so you always see results */
 .response {
@@ -101,9 +118,18 @@ button:hover { filter: brightness(1.1); }
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.06);
 }
 
-#status { margin: 0 0 0.5rem; font-weight: 600; }
-#status.ok { color: var(--ok); }
-#status.error { color: var(--error); }
+#status {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+#status.ok {
+  color: var(--ok);
+}
+
+#status.error {
+  color: var(--error);
+}
 
 #output {
   margin: 0;
@@ -115,12 +141,24 @@ button:hover { filter: brightness(1.1); }
   font-size: 0.8rem;
 }
 
-#output:empty { display: none; }
+#output:empty {
+  display: none;
+}
 
-.hint { margin: -0.25rem 0 0.75rem; font-size: 0.85rem; color: var(--muted); }
+.hint {
+  margin: -0.25rem 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
 
-#meta { margin: -0.25rem 0 0.5rem; font-size: 0.8rem; }
-#meta:empty { display: none; }
+#meta {
+  margin: -0.25rem 0 0.5rem;
+  font-size: 0.8rem;
+}
+
+#meta:empty {
+  display: none;
+}
 
 h3 {
   font-size: 0.95rem;
@@ -139,6 +177,17 @@ button.link {
   text-decoration: underline;
 }
 
-.list { list-style: none; padding: 0; margin: 0; }
-.list li { padding: 0.4rem 0; border-top: 1px solid var(--border); }
-.muted { color: var(--muted); }
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list li {
+  padding: 0.4rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.muted {
+  color: var(--muted);
+}
